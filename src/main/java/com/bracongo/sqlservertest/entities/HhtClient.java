@@ -51,6 +51,36 @@ public class HhtClient extends BaseClass{
     @JsonIgnore
     @XmlTransient
     private byte[] photo;
+   /* @OneToMany(cascade = CascadeType.ALL, mappedBy = "codeClt")
+    @JsonIgnore
+    @XmlTransient
+    private List<HhtFacture> hhtFactureList;
+    @JoinColumn(name = "CODE_CARTE_FID", referencedColumnName = "CODE_CARTE_FID")
+    @ManyToOne
+    @JsonIgnore
+    @XmlTransient
+    private HhtCarteFidelite codeCarteFid;
+    @JoinColumn(name = "CODE_CREDIT", referencedColumnName = "CODE_CREDIT")
+    @ManyToOne
+    @JsonIgnore
+    @XmlTransient
+    private HhtCredit codeCredit;
+    @JoinColumn(name = "CODE_TYPE_DOCUMENT_DEFAUT", referencedColumnName = "CODE_TYPE_DOCUMENT")
+    @ManyToOne
+    @JsonIgnore
+    @XmlTransient
+    private HhtDocuments codeTypeDocumentDefaut;
+    @JoinColumn(name = "NUM_TARIF", referencedColumnName = "NUM_TARIF")
+    @ManyToOne
+    @JsonIgnore
+    @XmlTransient
+    private HhtNumTarifs numTarif;
+    @JoinColumn(name = "CODE_TYPE_CLI", referencedColumnName = "CODE_TYPE_CLI")
+    @ManyToOne
+    @JsonIgnore
+    @XmlTransient
+    private HhtTypeClient codeTypeCli;
+    */
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -625,5 +655,55 @@ public class HhtClient extends BaseClass{
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+
+//    @XmlTransient
+//    @org.codehaus.jackson.annotate.JsonIgnore
+//    public List<HhtFacture> getHhtFactureList() {
+//        return hhtFactureList;
+//    }
+//
+//    public void setHhtFactureList(List<HhtFacture> hhtFactureList) {
+//        this.hhtFactureList = hhtFactureList;
+//    }
+//
+//    public HhtCarteFidelite getCodeCarteFid() {
+//        return codeCarteFid;
+//    }
+//
+//    public void setCodeCarteFid(HhtCarteFidelite codeCarteFid) {
+//        this.codeCarteFid = codeCarteFid;
+//    }
+//
+//    public HhtCredit getCodeCredit() {
+//        return codeCredit;
+//    }
+//
+//    public void setCodeCredit(HhtCredit codeCredit) {
+//        this.codeCredit = codeCredit;
+//    }
+//
+//    public HhtDocuments getCodeTypeDocumentDefaut() {
+//        return codeTypeDocumentDefaut;
+//    }
+//
+//    public void setCodeTypeDocumentDefaut(HhtDocuments codeTypeDocumentDefaut) {
+//        this.codeTypeDocumentDefaut = codeTypeDocumentDefaut;
+//    }
+//
+//    public HhtNumTarifs getNumTarif() {
+//        return numTarif;
+//    }
+//
+//    public void setNumTarif(HhtNumTarifs numTarif) {
+//        this.numTarif = numTarif;
+//    }
+//
+//    public HhtTypeClient getCodeTypeCli() {
+//        return codeTypeCli;
+//    }
+//
+//    public void setCodeTypeCli(HhtTypeClient codeTypeCli) {
+//        this.codeTypeCli = codeTypeCli;
+//    }
 
 }

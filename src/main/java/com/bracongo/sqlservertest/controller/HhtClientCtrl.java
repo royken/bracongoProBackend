@@ -2,12 +2,15 @@ package com.bracongo.sqlservertest.controller;
 
 import com.bracongo.sqlservertest.entities.HhtClient;
 import com.bracongo.sqlservertest.entities.projection.CustumResponse;
+import com.bracongo.sqlservertest.entities.projection.VenteItem;
+import com.bracongo.sqlservertest.entities.projection.VentesInfos;
 import com.bracongo.sqlservertest.service.contract.IHhtClientService;
 import com.bracongo.sqlservertest.utils.Exceptions.PdvException;
 import com.bracongo.sqlservertest.utils.Constants;
 import com.bracongo.sqlservertest.utils.SharedResourcesProvider;
 import java.text.MessageFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
@@ -101,6 +104,71 @@ public class HhtClientCtrl {
         }
         return resultMap;
 
+    }
+    
+    @RequestMapping(value = "/client/remise/{numCompte}/{password}", method = RequestMethod.GET)
+    public Map<String, Object> getByCustomerRemise(HttpServletRequest request, @PathVariable("numCompte") String numCompte, @PathVariable("password") String password) {
+        resultMap = new HashMap<>();
+        try {
+            
+            double value = clientService.getRemiseMonth(numCompte, password);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
+            resultMap.put(Constants.JSON_PAYLOAD_KEY, value);
+        } catch (PdvException ex) {
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, ex.getMessage().substring(ex.getMessage().lastIndexOf('-') + 1));
+            logger.error(ex);
+        } catch (Exception e) {
+            errorMessage = MessageFormat.format(messageCtx.getProperty("THRAVVELCORESTATIONCTRL-001"), (Object) null);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, errorMessage.substring(errorMessage.lastIndexOf('-') + 1));
+            logger.error(errorMessage, e);
+        }
+        return resultMap;
+
+    }
+    
+    @RequestMapping(value = "/client/histo/{numCompte}/{password}", method = RequestMethod.GET)
+    public Map<String, Object> getByCustomerHistorique(HttpServletRequest request, @PathVariable("numCompte") String numCompte, @PathVariable("password") String password) {
+        resultMap = new HashMap<>();
+        try {
+            
+            List<VenteItem> items = clientService.getHistorique(numCompte, password);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
+            resultMap.put(Constants.JSON_PAYLOAD_KEY, items);
+        } catch (PdvException ex) {
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, ex.getMessage().substring(ex.getMessage().lastIndexOf('-') + 1));
+            logger.error(ex);
+        } catch (Exception e) {
+            errorMessage = MessageFormat.format(messageCtx.getProperty("THRAVVELCORESTATIONCTRL-001"), (Object) null);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, errorMessage.substring(errorMessage.lastIndexOf('-') + 1));
+            logger.error(errorMessage, e);
+        }
+        return resultMap;
+
+    }
+    
+    @RequestMapping(value = "/client/ventes/{numCompte}/{password}", method = RequestMethod.GET)
+    public Map<String, Object> getByCustomerVentesInfos(HttpServletRequest request, @PathVariable("numCompte") String numCompte, @PathVariable("password") String password) {
+        resultMap = new HashMap<>();
+        try {
+            
+            VentesInfos infos = clientService.getVentesInfosByClient(numCompte, password);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
+            resultMap.put(Constants.JSON_PAYLOAD_KEY, infos);
+        } catch (PdvException ex) {
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, ex.getMessage().substring(ex.getMessage().lastIndexOf('-') + 1));
+            logger.error(ex);
+        } catch (Exception e) {
+            errorMessage = MessageFormat.format(messageCtx.getProperty("THRAVVELCORESTATIONCTRL-001"), (Object) null);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, errorMessage.substring(errorMessage.lastIndexOf('-') + 1));
+            logger.error(errorMessage, e);
+        }
+        return resultMap;
     }
     
 }

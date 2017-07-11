@@ -54,6 +54,6 @@ public class Constants {
         // customer account creation
         public static final Integer  NEW_CLIENT = 0; // le client n'a pas encore de compte
         public static final Integer  OLD_CLIENT = 1; // le client a deja un compte
-        public static final Integer  CLIENT_ERROR = 0; // le client n'existe pas
+        public static final Integer  CLIENT_ERROR = 2; // le client n'existe pas
 
 }

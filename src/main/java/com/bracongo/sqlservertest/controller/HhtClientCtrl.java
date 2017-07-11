@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HhtClientCtrl {
     
-     private static final Logger logger = Logger.getLogger(HhtClientCtrl.class);
+    private static final Logger logger = Logger.getLogger(HhtClientCtrl.class);
     private Map<String, Object> resultMap;
     private final Properties messageCtx = SharedResourcesProvider.getInstance().getFrontMessageCtx();
     private String errorMessage;
@@ -84,12 +84,12 @@ public class HhtClientCtrl {
 
     }
     
-    @RequestMapping(value = "/client/create/{numCompte}", method = RequestMethod.GET)
-    public Map<String, Object> createCustomerAccount(HttpServletRequest request, @PathVariable("numCompte") String numCompte) {
+    @RequestMapping(value = "/client/create/{numCompte}/{password}", method = RequestMethod.GET)
+    public Map<String, Object> createCustomerAccount(HttpServletRequest request, @PathVariable("numCompte") String numCompte, @PathVariable("password") String password) {
         resultMap = new HashMap<>();
         try {
             
-            CustumResponse response = clientService.createAccount(numCompte);
+            CustumResponse response = clientService.createAccount(numCompte, password);
             resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
             resultMap.put(Constants.JSON_PAYLOAD_KEY, response);
         } catch (PdvException ex) {

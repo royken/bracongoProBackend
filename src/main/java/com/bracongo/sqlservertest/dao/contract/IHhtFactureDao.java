@@ -4,9 +4,9 @@ import com.bracongo.sqlservertest.dao.IGenericDao;
 import com.bracongo.sqlservertest.entities.HhtClient;
 import com.bracongo.sqlservertest.entities.HhtFacture;
 import com.bracongo.sqlservertest.entities.projection.VenteItem;
+import com.bracongo.sqlservertest.entities.projection.VenteJourItem;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,6 +23,9 @@ public interface IHhtFactureDao extends IGenericDao<HhtFacture> {
     
     @Query("select new com.bracongo.sqlservertest.entities.projection.VenteItem(sum(factdetail.qte) as quantite, Month(fact.dateFact) as mois) from HhtFacture fact, HhtClient hclient, HhtDetailFactureArt factdetail, HhtArticle art where  fact.codeClt = :client and hclient = :client and fact.hhtFacturePK.codeDevise=1 and fact.annule is NULL and year(fact.dateFact) = :annee and fact.hhtFacturePK.codeFact = factdetail.hhtDetailFactureArtPK.codeFact and factdetail.hhtDetailFactureArtPK.codeArt = art.codeArt and substring (art.libelle,1,2) = 'CS' group by (Month (fact.dateFact))")
     public List<VenteItem> getHistoriqueVente(@Param("client") HhtClient client, @Param("annee") int annee);
+    
+    @Query("select new com.bracongo.sqlservertest.entities.projection.VenteJourItem(sum(factdetail.qte) as quantite, Day(fact.dateFact) as jour) from HhtFacture fact, HhtClient hclient, HhtDetailFactureArt factdetail, HhtArticle art where  fact.codeClt = :client and hclient = :client and fact.hhtFacturePK.codeDevise=1 and fact.annule is NULL and year(fact.dateFact) = :annee and Month(fact.dateFact) = :mois and fact.hhtFacturePK.codeFact = factdetail.hhtDetailFactureArtPK.codeFact and factdetail.hhtDetailFactureArtPK.codeArt = art.codeArt and substring (art.libelle,1,2) = 'CS' group by (Day (fact.dateFact))")
+    public List<VenteJourItem> getHistoriqueJourVente(@Param("client") HhtClient client, @Param("annee") int annee , @Param("mois") int mois);
    /* 
     @Query(value = "SELECT \n" +
 "sum(HHT_DETAIL_FACTURE_ART.QTE) as quantite, Month (HHT_FACTURE.DATE_FACT) as mois \n" +

@@ -24,6 +24,8 @@ public class VentesInfos implements Serializable{
     private Date dateDebutRemise;
     
     private List<VenteItem> venteItems;
+    
+    private List<VenteJourItem> venteJourItems;
 
     public double getRemise() {
         return remise;
@@ -39,6 +41,14 @@ public class VentesInfos implements Serializable{
 
     public void setVenteItems(List<VenteItem> venteItems) {
         this.venteItems = venteItems;
+    }
+
+    public List<VenteJourItem> getVenteJourItems() {
+        return venteJourItems;
+    }
+
+    public void setVenteJourItems(List<VenteJourItem> venteJourItems) {
+        this.venteJourItems = venteJourItems;
     }
 
     public Date getDateFinRemise() {

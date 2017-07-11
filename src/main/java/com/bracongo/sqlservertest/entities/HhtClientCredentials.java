@@ -20,11 +20,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author vr.kenfack
+ * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
 @Entity
 @Table(name = "HHT_CLIENT_CREDENTIALS")
-@XmlRootElement(name="HHT_CLIENT_CREDENTIALS")
+@XmlRootElement(name="credentials")
 @XmlAccessorType(XmlAccessType.FIELD)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class HhtClientCredentials extends BaseClass{

@@ -8,6 +8,7 @@ import com.bracongo.sqlservertest.entities.HhtClient;
 import com.bracongo.sqlservertest.entities.HhtClientCredentials;
 import com.bracongo.sqlservertest.entities.projection.CustumResponse;
 import com.bracongo.sqlservertest.entities.projection.VenteItem;
+import com.bracongo.sqlservertest.entities.projection.VenteJourItem;
 import com.bracongo.sqlservertest.entities.projection.VentesInfos;
 import com.bracongo.sqlservertest.service.CommonService;
 import com.bracongo.sqlservertest.service.contract.IHhtClientService;
@@ -108,7 +109,7 @@ public class HhtClientServiceImpl extends CommonService implements IHhtClientSer
     }
 
     @Override
-    public CustumResponse createAccount(String code) throws PdvException {
+    public CustumResponse createAccount(String code, String password) throws PdvException {
         try {
             HhtClientCredentials credentials;
             HhtClient client = clientDao.findByCustumerNumber(code.trim());
@@ -120,7 +121,7 @@ public class HhtClientServiceImpl extends CommonService implements IHhtClientSer
                     credentials.setActive(1);
                     credentials.setClient(client);
                     credentials.setDateCreation(new Date());
-                    credentials.setPassword("password");
+                    credentials.setPassword(password.trim());
                     credentials = credentialsDao.save(credentials);
                     resp.setNumclient(code);
                     resp.setStatus(NEW_CLIENT);
@@ -252,10 +253,15 @@ public class HhtClientServiceImpl extends CommonService implements IHhtClientSer
                         /* Calcul de l'hitorique de vente*/
                         cal = Calendar.getInstance();
                         List<VenteItem> items = factureDao.getHistoriqueVente(client, cal.get(Calendar.YEAR));
+                        cal = Calendar.getInstance();
+                        /* To remove after*/
+                        cal.set(Calendar.MONTH, 4);
+                        List<VenteJourItem> items2 = factureDao.getHistoriqueJourVente(client, cal.get(Calendar.YEAR),cal.get(Calendar.MONTH));
                         //    System.out.println("LE RESULTAT : " + (VenteItem)items.get(0) );
                         VentesInfos result = new VentesInfos();
                         result.setRemise(remise == null ? 0: remise);
                         result.setVenteItems(items);
+                        result.setVenteJourItems(items2);
                         result.setDateDebutRemise(fin);
                         result.setDateFinRemise(debut);
                         return result;

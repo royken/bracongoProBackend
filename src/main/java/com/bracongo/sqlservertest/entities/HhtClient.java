@@ -238,6 +238,11 @@ public class HhtClient extends BaseClass{
     @JsonIgnore
     @OneToOne(mappedBy = "client")
     private HhtClientCredentials hhtClientCredentials;
+    
+    @XmlTransient
+    @JsonIgnore
+    @OneToMany(mappedBy = "client")
+    private List<HhtCommande> commandes;
    
 
     public HhtClient() {
@@ -655,6 +660,8 @@ public class HhtClient extends BaseClass{
     public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
+    
+    
 
 //    @XmlTransient
 //    @org.codehaus.jackson.annotate.JsonIgnore
@@ -705,5 +712,13 @@ public class HhtClient extends BaseClass{
 //    public void setCodeTypeCli(HhtTypeClient codeTypeCli) {
 //        this.codeTypeCli = codeTypeCli;
 //    }
+
+    public List<HhtCommande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(List<HhtCommande> commandes) {
+        this.commandes = commandes;
+    }
 
 }

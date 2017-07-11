@@ -28,10 +28,11 @@ public interface IHhtClientService extends IGenericService<HhtClient>{
     /**
      * 
      * @param code
+     * @param password
      * @return
      * @throws PdvException 
      */
-    public CustumResponse createAccount(String code) throws PdvException;
+    public CustumResponse createAccount(String code, String password) throws PdvException;
     
     /**
      * 

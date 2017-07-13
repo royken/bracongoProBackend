@@ -15,9 +15,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -31,19 +32,24 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtParfums.findByCodeParfum", query = "SELECT h FROM HhtParfums h WHERE h.codeParfum = :codeParfum")
     , @NamedQuery(name = "HhtParfums.findByLibParfum", query = "SELECT h FROM HhtParfums h WHERE h.libParfum = :libParfum")
     , @NamedQuery(name = "HhtParfums.findByAbrevParfum", query = "SELECT h FROM HhtParfums h WHERE h.abrevParfum = :abrevParfum")})
-public class HhtParfums  extends BaseClass{
+public class HhtParfums implements Serializable {
+
+    @OneToMany(mappedBy = "codeParfum")
+    private List<HhtArticle> hhtArticleList;
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_PARFUM")
     private String codeParfum;
+    @Size(max = 50)
     @Column(name = "LIB_PARFUM")
     private String libParfum;
+    @Size(max = 10)
     @Column(name = "ABREV_PARFUM")
     private String abrevParfum;
-    @OneToMany(mappedBy = "codeParfum")
-    private List<HhtArticle> hhtArticleList;
 
     public HhtParfums() {
     }
@@ -76,16 +82,6 @@ public class HhtParfums  extends BaseClass{
         this.abrevParfum = abrevParfum;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtArticle> getHhtArticleList() {
-        return hhtArticleList;
-    }
-
-    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
-        this.hhtArticleList = hhtArticleList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -109,6 +105,15 @@ public class HhtParfums  extends BaseClass{
     @Override
     public String toString() {
         return "com.bracongo.sqlservertest.entities.HhtParfums[ codeParfum=" + codeParfum + " ]";
+    }
+
+    @XmlTransient
+    public List<HhtArticle> getHhtArticleList() {
+        return hhtArticleList;
+    }
+
+    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
+        this.hhtArticleList = hhtArticleList;
     }
     
 }

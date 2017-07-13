@@ -15,9 +15,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -32,15 +33,19 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtTailles.findByTaille", query = "SELECT h FROM HhtTailles h WHERE h.taille = :taille")})
 public class HhtTailles implements Serializable {
 
+    @OneToMany(mappedBy = "codeTaille")
+    private List<HhtArticle> hhtArticleList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_TAILLE")
     private String codeTaille;
+    @Size(max = 50)
     @Column(name = "TAILLE")
     private String taille;
-    @OneToMany(mappedBy = "codeTaille")
-    private List<HhtArticle> hhtArticleList;
 
     public HhtTailles() {
     }
@@ -63,16 +68,6 @@ public class HhtTailles implements Serializable {
 
     public void setTaille(String taille) {
         this.taille = taille;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtArticle> getHhtArticleList() {
-        return hhtArticleList;
-    }
-
-    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
-        this.hhtArticleList = hhtArticleList;
     }
 
     @Override
@@ -98,6 +93,15 @@ public class HhtTailles implements Serializable {
     @Override
     public String toString() {
         return "com.bracongo.sqlservertest.entities.HhtTailles[ codeTaille=" + codeTaille + " ]";
+    }
+
+    @XmlTransient
+    public List<HhtArticle> getHhtArticleList() {
+        return hhtArticleList;
+    }
+
+    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
+        this.hhtArticleList = hhtArticleList;
     }
     
 }

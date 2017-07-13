@@ -6,23 +6,18 @@
 package com.bracongo.sqlservertest.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -56,13 +51,16 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtArticle.findByCodeCompositionArticle", query = "SELECT h FROM HhtArticle h WHERE h.codeCompositionArticle = :codeCompositionArticle")
     , @NamedQuery(name = "HhtArticle.findByQteCompositionArticle", query = "SELECT h FROM HhtArticle h WHERE h.qteCompositionArticle = :qteCompositionArticle")
     , @NamedQuery(name = "HhtArticle.findByTypeContenant", query = "SELECT h FROM HhtArticle h WHERE h.typeContenant = :typeContenant")})
-public class HhtArticle  extends BaseClass{
+public class HhtArticle implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_ART")
     private String codeArt;
+    @Size(max = 100)
     @Column(name = "LIBELLE")
     private String libelle;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -72,6 +70,7 @@ public class HhtArticle  extends BaseClass{
     private Double seuilRemise;
     @Column(name = "RISTOURNE_UNITAIRE")
     private Double ristourneUnitaire;
+    @Size(max = 50)
     @Column(name = "CODE_BARRE")
     private String codeBarre;
     @Column(name = "TAXE1")
@@ -90,35 +89,38 @@ public class HhtArticle  extends BaseClass{
     private Integer conditionnement;
     @Column(name = "ACC_REPRISE")
     private Boolean accReprise;
+    @Size(max = 20)
     @Column(name = "CODE_SI")
     private String codeSi;
     @Column(name = "QTE_EN_STOCK")
     private Integer qteEnStock;
+    @Size(max = 20)
     @Column(name = "CODE_DECOMPOSITION_ARTICLE")
     private String codeDecompositionArticle;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "QTE_DECOMPOSITION_ARTICLE")
     private double qteDecompositionArticle;
+    @Size(max = 20)
     @Column(name = "CODE_DECOMPOSITION_EMBALLAGE")
     private String codeDecompositionEmballage;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "QTE_DECOMPOSITION_EMBALLAGE")
     private double qteDecompositionEmballage;
+    @Size(max = 20)
     @Column(name = "CODE_COMPOSITION_ARTICLE")
     private String codeCompositionArticle;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "QTE_COMPOSITION_ARTICLE")
     private double qteCompositionArticle;
+    @Size(max = 20)
     @Column(name = "TYPE_CONTENANT")
     private String typeContenant;
-//    @JoinTable(name = "HHT_ARTICLE_FIDELITE", joinColumns = {
-//        @JoinColumn(name = "CODE_ART", referencedColumnName = "CODE_ART")}, inverseJoinColumns = {
-//        @JoinColumn(name = "TYPE_FID", referencedColumnName = "TYPE_FID")})
-//    @ManyToMany
-//    private List<HhtTypeFidelite> hhtTypeFideliteList;
-//    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
-//    @ManyToOne
-//    private HhtDevise codeDevise;
+    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
+    @ManyToOne
+    private HhtDevise codeDevise;
     @JoinColumn(name = "CODE_EMBALLAGE", referencedColumnName = "CODE_EMBALLAGE")
     @ManyToOne
     private HhtEmballage codeEmballage;
@@ -134,11 +136,9 @@ public class HhtArticle  extends BaseClass{
     @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
     @ManyToOne
     private HhtTva codeTva;
-//    @JoinColumn(name = "NUMERO_SOCIETE", referencedColumnName = "ID")
-//    @ManyToOne
-//    private NumeroSociete numeroSociete;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hhtArticle")
-    private List<HhtDetailFactureArt> hhtDetailFactureArtList;
+    @JoinColumn(name = "NUMERO_SOCIETE", referencedColumnName = "ID")
+    @ManyToOne
+    private NumeroSociete numeroSociete;
 
     public HhtArticle() {
     }
@@ -338,23 +338,13 @@ public class HhtArticle  extends BaseClass{
         this.typeContenant = typeContenant;
     }
 
-//    @XmlTransient
-//    @JsonIgnore
-//    public List<HhtTypeFidelite> getHhtTypeFideliteList() {
-//        return hhtTypeFideliteList;
-//    }
-//
-//    public void setHhtTypeFideliteList(List<HhtTypeFidelite> hhtTypeFideliteList) {
-//        this.hhtTypeFideliteList = hhtTypeFideliteList;
-//    }
+    public HhtDevise getCodeDevise() {
+        return codeDevise;
+    }
 
-//    public HhtDevise getCodeDevise() {
-//        return codeDevise;
-//    }
-//
-//    public void setCodeDevise(HhtDevise codeDevise) {
-//        this.codeDevise = codeDevise;
-//    }
+    public void setCodeDevise(HhtDevise codeDevise) {
+        this.codeDevise = codeDevise;
+    }
 
     public HhtEmballage getCodeEmballage() {
         return codeEmballage;
@@ -396,22 +386,12 @@ public class HhtArticle  extends BaseClass{
         this.codeTva = codeTva;
     }
 
-//    public NumeroSociete getNumeroSociete() {
-//        return numeroSociete;
-//    }
-//
-//    public void setNumeroSociete(NumeroSociete numeroSociete) {
-//        this.numeroSociete = numeroSociete;
-//    }
-
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtDetailFactureArt> getHhtDetailFactureArtList() {
-        return hhtDetailFactureArtList;
+    public NumeroSociete getNumeroSociete() {
+        return numeroSociete;
     }
 
-    public void setHhtDetailFactureArtList(List<HhtDetailFactureArt> hhtDetailFactureArtList) {
-        this.hhtDetailFactureArtList = hhtDetailFactureArtList;
+    public void setNumeroSociete(NumeroSociete numeroSociete) {
+        this.numeroSociete = numeroSociete;
     }
 
     @Override

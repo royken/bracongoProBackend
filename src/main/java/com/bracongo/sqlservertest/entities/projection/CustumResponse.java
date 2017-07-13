@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author vr.kenfack
+ * @author Kenfack Valmy-Roi <roykenvalmy@gmail.com>
  */
 @XmlRootElement(name = "reponse")
 @XmlAccessorType(XmlAccessType.FIELD)

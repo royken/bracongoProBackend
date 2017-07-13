@@ -12,16 +12,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -44,13 +43,20 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtEmballage.findByCodeSi", query = "SELECT h FROM HhtEmballage h WHERE h.codeSi = :codeSi")})
 public class HhtEmballage implements Serializable {
 
+    @OneToMany(mappedBy = "codeEmballage")
+    private List<HhtArticle> hhtArticleList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_EMBALLAGE")
     private String codeEmballage;
+    @Size(max = 100)
     @Column(name = "DESIGNATION")
     private String designation;
+    @Size(max = 20)
     @Column(name = "TYPE_EMBALLAGE")
     private String typeEmballage;
     @Column(name = "NBR_UNITE")
@@ -58,6 +64,7 @@ public class HhtEmballage implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "PRIX_EMBALLAGE")
     private Double prixEmballage;
+    @Size(max = 50)
     @Column(name = "CODE_BARRE_EMB")
     private String codeBarreEmb;
     @Column(name = "PRIX_MANUEL_EMB")
@@ -66,14 +73,12 @@ public class HhtEmballage implements Serializable {
     private Boolean nonActif;
     @Column(name = "PRIX_SUPPLEMENT")
     private Double prixSupplement;
+    @Size(max = 20)
     @Column(name = "CODE_SI")
     private String codeSi;
-  
-    @OneToMany(mappedBy = "codeEmballage")
-    private List<HhtArticle> hhtArticleList;
-//    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
-//    @ManyToOne
-//    private HhtDevise codeDevise;
+    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
+    @ManyToOne
+    private HhtDevise codeDevise;
     @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
     @ManyToOne
     private HhtTva codeTva;
@@ -165,24 +170,13 @@ public class HhtEmballage implements Serializable {
         this.codeSi = codeSi;
     }
 
-  
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtArticle> getHhtArticleList() {
-        return hhtArticleList;
+    public HhtDevise getCodeDevise() {
+        return codeDevise;
     }
 
-    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
-        this.hhtArticleList = hhtArticleList;
+    public void setCodeDevise(HhtDevise codeDevise) {
+        this.codeDevise = codeDevise;
     }
-
-//    public HhtDevise getCodeDevise() {
-//        return codeDevise;
-//    }
-//
-//    public void setCodeDevise(HhtDevise codeDevise) {
-//        this.codeDevise = codeDevise;
-//    }
 
     public HhtTva getCodeTva() {
         return codeTva;
@@ -215,6 +209,15 @@ public class HhtEmballage implements Serializable {
     @Override
     public String toString() {
         return "com.bracongo.sqlservertest.entities.HhtEmballage[ codeEmballage=" + codeEmballage + " ]";
+    }
+
+    @XmlTransient
+    public List<HhtArticle> getHhtArticleList() {
+        return hhtArticleList;
+    }
+
+    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
+        this.hhtArticleList = hhtArticleList;
     }
     
 }

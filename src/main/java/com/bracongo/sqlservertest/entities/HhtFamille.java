@@ -17,9 +17,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -34,18 +35,22 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtFamille.findByLibFamille", query = "SELECT h FROM HhtFamille h WHERE h.libFamille = :libFamille")})
 public class HhtFamille implements Serializable {
 
+    @OneToMany(mappedBy = "codeFamille")
+    private List<HhtSousFamille> hhtSousFamilleList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_FAMILLE")
     private String codeFamille;
+    @Size(max = 50)
     @Column(name = "LIB_FAMILLE")
     private String libFamille;
     @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
     @ManyToOne
     private HhtTva codeTva;
-    @OneToMany(mappedBy = "codeFamille")
-    private List<HhtSousFamille> hhtSousFamilleList;
 
     public HhtFamille() {
     }
@@ -78,16 +83,6 @@ public class HhtFamille implements Serializable {
         this.codeTva = codeTva;
     }
 
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtSousFamille> getHhtSousFamilleList() {
-        return hhtSousFamilleList;
-    }
-
-    public void setHhtSousFamilleList(List<HhtSousFamille> hhtSousFamilleList) {
-        this.hhtSousFamilleList = hhtSousFamilleList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -111,6 +106,15 @@ public class HhtFamille implements Serializable {
     @Override
     public String toString() {
         return "com.bracongo.sqlservertest.entities.HhtFamille[ codeFamille=" + codeFamille + " ]";
+    }
+
+    @XmlTransient
+    public List<HhtSousFamille> getHhtSousFamilleList() {
+        return hhtSousFamilleList;
+    }
+
+    public void setHhtSousFamilleList(List<HhtSousFamille> hhtSousFamilleList) {
+        this.hhtSousFamilleList = hhtSousFamilleList;
     }
     
 }

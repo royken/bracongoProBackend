@@ -15,9 +15,10 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  *
@@ -33,20 +34,22 @@ import org.codehaus.jackson.annotate.JsonIgnore;
     , @NamedQuery(name = "HhtTva.findByTauxTva", query = "SELECT h FROM HhtTva h WHERE h.tauxTva = :tauxTva")})
 public class HhtTva implements Serializable {
 
+    @OneToMany(mappedBy = "codeTva")
+    private List<HhtArticle> hhtArticleList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "CODE_TVA")
     private String codeTva;
+    @Size(max = 50)
     @Column(name = "LIBELLE_TVA")
     private String libelleTva;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "TAUX_TVA")
     private Double tauxTva;
-    @OneToMany(mappedBy = "codeTva")
-    private List<HhtArticle> hhtArticleList;
-    @OneToMany(mappedBy = "codeTva")
-    private List<HhtDetailFactureArt> hhtDetailFactureArtList;
     @OneToMany(mappedBy = "codeTva")
     private List<HhtEmballage> hhtEmballageList;
     @OneToMany(mappedBy = "codeTva")
@@ -84,27 +87,6 @@ public class HhtTva implements Serializable {
     }
 
     @XmlTransient
-    @JsonIgnore
-    public List<HhtArticle> getHhtArticleList() {
-        return hhtArticleList;
-    }
-
-    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
-        this.hhtArticleList = hhtArticleList;
-    }
-
-    @XmlTransient
-    @JsonIgnore
-    public List<HhtDetailFactureArt> getHhtDetailFactureArtList() {
-        return hhtDetailFactureArtList;
-    }
-
-    public void setHhtDetailFactureArtList(List<HhtDetailFactureArt> hhtDetailFactureArtList) {
-        this.hhtDetailFactureArtList = hhtDetailFactureArtList;
-    }
-
-    @XmlTransient
-    @JsonIgnore
     public List<HhtEmballage> getHhtEmballageList() {
         return hhtEmballageList;
     }
@@ -114,7 +96,6 @@ public class HhtTva implements Serializable {
     }
 
     @XmlTransient
-    @JsonIgnore
     public List<HhtFamille> getHhtFamilleList() {
         return hhtFamilleList;
     }
@@ -146,6 +127,15 @@ public class HhtTva implements Serializable {
     @Override
     public String toString() {
         return "com.bracongo.sqlservertest.entities.HhtTva[ codeTva=" + codeTva + " ]";
+    }
+
+    @XmlTransient
+    public List<HhtArticle> getHhtArticleList() {
+        return hhtArticleList;
+    }
+
+    public void setHhtArticleList(List<HhtArticle> hhtArticleList) {
+        this.hhtArticleList = hhtArticleList;
     }
     
 }

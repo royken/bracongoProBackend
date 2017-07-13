@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "commandeAnswer")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CommandeAnswer implements Serializable{
+public class RequestAnswer implements Serializable{
     
     private static final long serialVersionUID = 1L;
     

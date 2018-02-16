@@ -4,6 +4,7 @@ import com.bracongo.sqlservertest.entities.HhtClient;
 import com.bracongo.sqlservertest.entities.projection.CustumResponse;
 import com.bracongo.sqlservertest.entities.projection.VenteItem;
 import com.bracongo.sqlservertest.entities.projection.VentesInfos;
+import com.bracongo.sqlservertest.entities.projection.VentesResult;
 import com.bracongo.sqlservertest.service.IGenericService;
 import com.bracongo.sqlservertest.utils.Exceptions.PdvException;
 import java.util.Date;
@@ -59,7 +60,15 @@ public interface IHhtClientService extends IGenericService<HhtClient>{
      * @return
      * @throws PdvException 
      */
-    public VentesInfos getVentesInfosByClient(String code, String password) throws PdvException;
+    public VentesResult getVentesInfosByClient(String code, String password) throws PdvException;
+    
+    /**
+     * retourne les pdvs d'un circuit
+     * @param circuit
+     * @return
+     * @throws PdvException 
+     */
+    public List<HhtClient> getAllByCircuit(String circuit) throws PdvException;
     
     
 }

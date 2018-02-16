@@ -1,32 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.bracongo.sqlservertest.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigInteger;
-import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -234,16 +219,6 @@ public class HhtClient extends BaseClass{
     @XmlTransient
     private Double area;
     
-    @XmlTransient
-    @JsonIgnore
-    @OneToOne(mappedBy = "client")
-    private HhtClientCredentials hhtClientCredentials;
-    
-    @XmlTransient
-    @JsonIgnore
-    @OneToMany(mappedBy = "client")
-    private List<HhtCommande> commandes;
-   
 
     public HhtClient() {
     }
@@ -645,14 +620,7 @@ public class HhtClient extends BaseClass{
         this.nTva = nTva;
     }
 
-    public HhtClientCredentials getHhtClientCredentials() {
-        return hhtClientCredentials;
-    }
-
-    public void setHhtClientCredentials(HhtClientCredentials hhtClientCredentials) {
-        this.hhtClientCredentials = hhtClientCredentials;
-    }
-
+  
     public byte[] getPhoto() {
         return photo;
     }
@@ -713,12 +681,5 @@ public class HhtClient extends BaseClass{
 //        this.codeTypeCli = codeTypeCli;
 //    }
 
-    public List<HhtCommande> getCommandes() {
-        return commandes;
-    }
-
-    public void setCommandes(List<HhtCommande> commandes) {
-        this.commandes = commandes;
-    }
-
+  
 }

@@ -77,12 +77,6 @@ public class HhtDetailFactureArt  extends BaseClass{
     @JoinColumn(name = "CODE_ART", referencedColumnName = "CODE_ART", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private HhtArticle hhtArticle;
-//    @JoinColumn(name = "CODE_MOTIF", referencedColumnName = "CODE_MOTIF")
-//    @ManyToOne
-//    private HhtMotifsModifications codeMotif;
-    @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
-    @ManyToOne
-    private HhtTva codeTva;
 
     public HhtDetailFactureArt() {
     }
@@ -214,14 +208,6 @@ public class HhtDetailFactureArt  extends BaseClass{
 //    public void setCodeMotif(HhtMotifsModifications codeMotif) {
 //        this.codeMotif = codeMotif;
 //    }
-
-    public HhtTva getCodeTva() {
-        return codeTva;
-    }
-
-    public void setCodeTva(HhtTva codeTva) {
-        this.codeTva = codeTva;
-    }
 
     @Override
     public int hashCode() {

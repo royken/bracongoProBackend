@@ -48,9 +48,7 @@ public class HhtFamille implements Serializable {
     @Size(max = 50)
     @Column(name = "LIB_FAMILLE")
     private String libFamille;
-    @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
-    @ManyToOne
-    private HhtTva codeTva;
+    
 
     public HhtFamille() {
     }
@@ -75,13 +73,7 @@ public class HhtFamille implements Serializable {
         this.libFamille = libFamille;
     }
 
-    public HhtTva getCodeTva() {
-        return codeTva;
-    }
-
-    public void setCodeTva(HhtTva codeTva) {
-        this.codeTva = codeTva;
-    }
+ 
 
     @Override
     public int hashCode() {

@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.bracongo.sqlservertest.dao.SpringDaoConfig;
-import com.bracongo.sqlservertest.data.SpringPersistenceConfig;
+import com.bracongo.sqlservertest.data.SpringPersistenceVenteConfig;
 import com.bracongo.sqlservertest.service.SpringServiceConfig;
 
 /**
@@ -22,7 +22,7 @@ import com.bracongo.sqlservertest.service.SpringServiceConfig;
 @EnableTransactionManagement
 @ComponentScan({ "com.bracongo.sqlservertest.dao", "com.bracongo.sqlservertest.service", "com.bracongo.sqlservertest.test",
 		"com.bracongo.sqlservertest.controller" })
-@Import({ SpringPersistenceConfig.class, SpringDaoConfig.class, SpringServiceConfig.class })
+@Import({SpringPersistenceVenteConfig.class, SpringDaoConfig.class, SpringServiceConfig.class })
 
 public class SpringGlobalConfig {
 

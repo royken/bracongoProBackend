@@ -76,13 +76,7 @@ public class HhtEmballage implements Serializable {
     @Size(max = 20)
     @Column(name = "CODE_SI")
     private String codeSi;
-    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
-    @ManyToOne
-    private HhtDevise codeDevise;
-    @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
-    @ManyToOne
-    private HhtTva codeTva;
-
+   
     public HhtEmballage() {
     }
 
@@ -168,22 +162,6 @@ public class HhtEmballage implements Serializable {
 
     public void setCodeSi(String codeSi) {
         this.codeSi = codeSi;
-    }
-
-    public HhtDevise getCodeDevise() {
-        return codeDevise;
-    }
-
-    public void setCodeDevise(HhtDevise codeDevise) {
-        this.codeDevise = codeDevise;
-    }
-
-    public HhtTva getCodeTva() {
-        return codeTva;
-    }
-
-    public void setCodeTva(HhtTva codeTva) {
-        this.codeTva = codeTva;
     }
 
     @Override

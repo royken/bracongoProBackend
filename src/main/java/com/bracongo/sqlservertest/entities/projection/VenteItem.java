@@ -18,6 +18,28 @@ public class VenteItem implements Serializable{
     private double quantite;
     
     private int mois;
+    
+    private double chiffre;
+    
+    private String type;
+
+    public VenteItem(double quantite, int mois, double chiffre, String type) {
+        this.quantite = quantite;
+        this.mois = mois;
+        this.chiffre = chiffre;
+        this.type = type;
+    }
+    
+    
+
+    public VenteItem(double quantite, int mois, double chiffre) {
+        this.quantite = quantite;
+        this.mois = mois;
+        this.chiffre = chiffre;
+    }
+
+  
+    
 
     public VenteItem(double quantite, int mois) {
         this.quantite = quantite;
@@ -39,6 +61,24 @@ public class VenteItem implements Serializable{
     public void setMois(int mois) {
         this.mois = mois;
     }
+    
+      public double getChiffre() {
+        return chiffre;
+    }
+
+    public void setChiffre(double chiffre) {
+        this.chiffre = chiffre;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+    
+    
 
     @Override
     public String toString() {

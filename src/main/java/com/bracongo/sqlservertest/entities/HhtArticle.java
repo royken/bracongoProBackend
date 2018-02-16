@@ -118,9 +118,7 @@ public class HhtArticle implements Serializable {
     @Size(max = 20)
     @Column(name = "TYPE_CONTENANT")
     private String typeContenant;
-    @JoinColumn(name = "CODE_DEVISE", referencedColumnName = "CODE_DEVISE")
-    @ManyToOne
-    private HhtDevise codeDevise;
+
     @JoinColumn(name = "CODE_EMBALLAGE", referencedColumnName = "CODE_EMBALLAGE")
     @ManyToOne
     private HhtEmballage codeEmballage;
@@ -133,13 +131,7 @@ public class HhtArticle implements Serializable {
     @JoinColumn(name = "CODE_TAILLE", referencedColumnName = "CODE_TAILLE")
     @ManyToOne
     private HhtTailles codeTaille;
-    @JoinColumn(name = "CODE_TVA", referencedColumnName = "CODE_TVA")
-    @ManyToOne
-    private HhtTva codeTva;
-    @JoinColumn(name = "NUMERO_SOCIETE", referencedColumnName = "ID")
-    @ManyToOne
-    private NumeroSociete numeroSociete;
-
+   
     public HhtArticle() {
     }
 
@@ -338,14 +330,6 @@ public class HhtArticle implements Serializable {
         this.typeContenant = typeContenant;
     }
 
-    public HhtDevise getCodeDevise() {
-        return codeDevise;
-    }
-
-    public void setCodeDevise(HhtDevise codeDevise) {
-        this.codeDevise = codeDevise;
-    }
-
     public HhtEmballage getCodeEmballage() {
         return codeEmballage;
     }
@@ -378,22 +362,7 @@ public class HhtArticle implements Serializable {
         this.codeTaille = codeTaille;
     }
 
-    public HhtTva getCodeTva() {
-        return codeTva;
-    }
-
-    public void setCodeTva(HhtTva codeTva) {
-        this.codeTva = codeTva;
-    }
-
-    public NumeroSociete getNumeroSociete() {
-        return numeroSociete;
-    }
-
-    public void setNumeroSociete(NumeroSociete numeroSociete) {
-        this.numeroSociete = numeroSociete;
-    }
-
+ 
     @Override
     public int hashCode() {
         int hash = 0;

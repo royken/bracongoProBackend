@@ -4,6 +4,7 @@ import com.bracongo.sqlservertest.entities.HhtClient;
 import com.bracongo.sqlservertest.entities.projection.CustumResponse;
 import com.bracongo.sqlservertest.entities.projection.VenteItem;
 import com.bracongo.sqlservertest.entities.projection.VentesInfos;
+import com.bracongo.sqlservertest.entities.projection.VentesResult;
 import com.bracongo.sqlservertest.service.contract.IHhtClientService;
 import com.bracongo.sqlservertest.utils.Exceptions.PdvException;
 import com.bracongo.sqlservertest.utils.Constants;
@@ -155,7 +156,7 @@ public class HhtClientCtrl {
         resultMap = new HashMap<>();
         try {
             
-            VentesInfos infos = clientService.getVentesInfosByClient(numCompte, password);
+            VentesResult infos = clientService.getVentesInfosByClient(numCompte, password);
             resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
             resultMap.put(Constants.JSON_PAYLOAD_KEY, infos);
         } catch (PdvException ex) {
@@ -171,4 +172,46 @@ public class HhtClientCtrl {
         return resultMap;
     }
     
+    @RequestMapping(value = "/clients/circuit/{circuit}", method = RequestMethod.GET)
+    public Map<String, Object> getByCustomerByCircuit(HttpServletRequest request, @PathVariable("circuit") String circuit) {
+        resultMap = new HashMap<>();
+        try {
+            
+            List<HhtClient> clients = clientService.getAllByCircuit(circuit);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
+            resultMap.put(Constants.JSON_PAYLOAD_KEY, clients);
+        } catch (PdvException ex) {
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, ex.getMessage().substring(ex.getMessage().lastIndexOf('-') + 1));
+            logger.error(ex);
+        } catch (Exception e) {
+            errorMessage = MessageFormat.format(messageCtx.getProperty("THRAVVELCORESTATIONCTRL-001"), (Object) null);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, errorMessage.substring(errorMessage.lastIndexOf('-') + 1));
+            logger.error(errorMessage, e);
+        }
+        return resultMap;
+
+    }
+  
+    /*
+    @RequestMapping(value = "/clients/2017PXv", method = RequestMethod.GET)
+    public Map<String, Object> generatePassword() {
+        resultMap = new HashMap<>();
+        try {
+           // Page<HhtClient> payload = clientService.getAllEntities(page, size);
+            clientService.generatePassword();
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.TRUE);
+            resultMap.put(Constants.JSON_PAYLOAD_KEY, "Done");
+       
+        } catch (Exception e) {
+            errorMessage = MessageFormat.format(messageCtx.getProperty("THRAVVELCORESTATIONCTRL-002"), (Object) null);
+            resultMap.put(Constants.JSON_SUCCESS_KEY, Boolean.FALSE);
+            resultMap.put(Constants.JSON_MESSAGE_KEY, errorMessage.substring(errorMessage.lastIndexOf('-') + 1));
+            logger.error(errorMessage, e);
+
+        }
+        return resultMap;
+    }
+    */
 }

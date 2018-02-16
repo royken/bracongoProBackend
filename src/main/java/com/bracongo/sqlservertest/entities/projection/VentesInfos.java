@@ -19,13 +19,23 @@ public class VentesInfos implements Serializable{
     
     private Double remise;
     
+    private Double chiffreAffaire;
+    
     private Date dateFinRemise;
     
     private Date dateDebutRemise;
     
-    private List<VenteItem> venteItems;
+    private List<VenteItem> venteItemBiere;
     
-    private List<VenteJourItem> venteJourItems;
+    private List<VenteItem> venteItemBG;
+    
+    private List<VenteItem> venteItemPET;
+    
+    private List<VenteJourItem> venteJourItemBiere;
+    
+    private List<VenteJourItem> venteJourItemBG;
+    
+    private List<VenteJourItem> venteJourItemPET;
 
     public double getRemise() {
         return remise;
@@ -35,20 +45,20 @@ public class VentesInfos implements Serializable{
         this.remise = remise;
     }
 
-    public List<VenteItem> getVenteItems() {
-        return venteItems;
+    public List<VenteItem> getVenteItemBiere() {
+        return venteItemBiere;
     }
 
-    public void setVenteItems(List<VenteItem> venteItems) {
-        this.venteItems = venteItems;
+    public void setVenteItemBiere(List<VenteItem> venteItemBiere) {
+        this.venteItemBiere = venteItemBiere;
     }
 
-    public List<VenteJourItem> getVenteJourItems() {
-        return venteJourItems;
+    public List<VenteJourItem> getVenteJourItemBiere() {
+        return venteJourItemBiere;
     }
 
-    public void setVenteJourItems(List<VenteJourItem> venteJourItems) {
-        this.venteJourItems = venteJourItems;
+    public void setVenteJourItemBiere(List<VenteJourItem> venteJourItems) {
+        this.venteJourItemBiere = venteJourItems;
     }
 
     public Date getDateFinRemise() {
@@ -65,6 +75,47 @@ public class VentesInfos implements Serializable{
 
     public void setDateDebutRemise(Date dateDebutRemise) {
         this.dateDebutRemise = dateDebutRemise;
+    }
+
+    public Double getChiffreAffaire() {
+        return chiffreAffaire;
+    }
+
+    public void setChiffreAffaire(Double chiffreAffaire) {
+        this.chiffreAffaire = chiffreAffaire;
+    }
+
+    public List<VenteItem> getVenteItemBG() {
+        return venteItemBG;
+    }
+
+    public void setVenteItemBG(List<VenteItem> venteItemBG) {
+        this.venteItemBG = venteItemBG;
+    }
+
+    public List<VenteItem> getVenteItemPET() {
+        return venteItemPET;
+    }
+
+    public void setVenteItemPET(List<VenteItem> venteItemPET) {
+        this.venteItemPET = venteItemPET;
+    }
+
+ 
+    public List<VenteJourItem> getVenteJourItemBG() {
+        return venteJourItemBG;
+    }
+
+    public void setVenteJourItemBG(List<VenteJourItem> venteJourItemBG) {
+        this.venteJourItemBG = venteJourItemBG;
+    }
+
+    public List<VenteJourItem> getVenteJourItemPET() {
+        return venteJourItemPET;
+    }
+
+    public void setVenteJourItemPET(List<VenteJourItem> venteJourItemPET) {
+        this.venteJourItemPET = venteJourItemPET;
     }
     
     

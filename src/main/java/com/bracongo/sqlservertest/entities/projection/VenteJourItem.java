@@ -18,6 +18,27 @@ public class VenteJourItem implements Serializable{
     private double quantite;
     
     private int jour;
+    
+    private String type;
+    
+    private double chiffre;
+
+    public VenteJourItem(double quantite, int jour, double chiffre) {
+        this.quantite = quantite;
+        this.jour = jour;
+        this.chiffre = chiffre;
+    }
+
+    public VenteJourItem(double quantite, int jour, String type, double chiffre) {
+        this.quantite = quantite;
+        this.jour = jour;
+        this.type = type;
+        this.chiffre = chiffre;
+    }
+    
+    
+    
+    
 
     public VenteJourItem(double quantite, int jour) {
         this.quantite = quantite;
@@ -40,11 +61,28 @@ public class VenteJourItem implements Serializable{
         this.jour = jour;
     }
 
-    @Override
-    public String toString() {
-        return "VenteJourItem{" + "quantite=" + quantite + ", jour=" + jour + '}';
+    public double getChiffre() {
+        return chiffre;
+    }
+
+    public void setChiffre(double chiffre) {
+        this.chiffre = chiffre;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
     
     
     
+
+    @Override
+    public String toString() {
+        return "VenteJourItem{" + "quantite=" + quantite + ", jour=" + jour + '}';
+    }
+  
 }
